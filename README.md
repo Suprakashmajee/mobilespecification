@@ -38,6 +38,10 @@ Demo account: `owner@mobilespecific.com` / `lab-owner`
 npm run build
 ```
 
-Upload `dist/` to `public_html`. Import `public/mobilespecific_hostinger_db.sql`. Copy `hostinger/api` to `public_html/api` and edit `config.php` on the server only.
+Upload the **entire** `dist/` folder into Hostinger `public_html` (replace old `index.html` and the `assets/` files). GitHub updates do not change mobilespecific.com until that upload happens. Then purge hCDN cache if the old teal site still appears.
+
+Confirm the new build: footer should read `Build 2026.09.13-amber`, and `/version.json` should return `"palette":"amber-copper"`.
+
+Import `public/mobilespecific_hostinger_db.sql`. Copy `hostinger/api` to `public_html/api` and edit `config.php` on the server only.
 
 Never commit Hostinger passwords.

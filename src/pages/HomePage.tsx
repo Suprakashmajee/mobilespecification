@@ -10,7 +10,7 @@ export function HomePage() {
   return (
     <div className="wrap">
       <section className="hero">
-        <div className="kicker">Hardware lab · specification only</div>
+        <div className="kicker">Amber copper lab · specification only</div>
         <h1>mobilespecific — phones, laptops, watches, tablets. Specs, not street prices.</h1>
         <p className="lede">
           Calibrated display nits, sensor optical formats, loudspeaker LUFS, Silicon-Carbon packs,

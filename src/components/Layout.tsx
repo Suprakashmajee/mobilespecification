@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AdSenseUnit } from "./AdSenseUnit";
 import { currentUser } from "../lib/auth";
+import { SITE_BUILD } from "../buildMeta";
 
 const links = [
   ["/", "Lab"],
@@ -78,6 +79,7 @@ export function Layout() {
             {" · "}
             <a href="/ads.txt">ads.txt</a>
           </div>
+          <div className="build-stamp">Build {SITE_BUILD} · amber copper palette</div>
         </div>
       </footer>
 

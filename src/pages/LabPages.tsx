@@ -162,8 +162,8 @@ export function DimensionsPage() {
               width: p.widthMm * scale,
               height: p.heightMm * scale,
               borderRadius: 18,
-              border: "3px solid #3ee0c5",
-              background: "#111820",
+              border: "3px solid #ff8a3d",
+              background: "#1a100e",
             }}
           />
         </div>
@@ -174,8 +174,8 @@ export function DimensionsPage() {
               width: p.thicknessMm * scale,
               height: p.heightMm * scale,
               borderRadius: 6,
-              border: "3px solid #7aa2ff",
-              background: "#151b26",
+              border: "3px solid #ffd166",
+              background: "#281714",
             }}
           />
         </div>
