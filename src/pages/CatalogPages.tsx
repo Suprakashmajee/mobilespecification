@@ -164,11 +164,58 @@ export function SimpleCatalog({
 }: {
   kind: "laptops" | "watches" | "tablets";
 }) {
+  const [brand, setBrand] = useState("all");
+  const [minRam, setMinRam] = useState(0);
+  const [gpuClass, setGpuClass] = useState("all");
+  const raw = kind === "laptops" ? laptops : kind === "watches" ? watches : tablets;
+  const brands = Array.from(new Set(raw.map((p) => p.brand))).sort();
   const items =
-    kind === "laptops" ? laptops : kind === "watches" ? watches : tablets;
+    kind !== "laptops"
+      ? raw
+      : laptops.filter((p) => {
+          if (brand !== "all" && p.brand !== brand) return false;
+          if (p.ramGb < minRam) return false;
+          const g = p.gpu.toLowerCase();
+          if (gpuClass === "rtx" && !g.includes("rtx")) return false;
+          if (gpuClass === "npu" && p.npuTops < 40) return false;
+          if (
+            gpuClass === "oled" &&
+            !p.display.toLowerCase().includes("oled") &&
+            !p.display.toLowerCase().includes("amoled")
+          )
+            return false;
+          return true;
+        });
   return (
     <div className="wrap section">
       <h1>{kind[0].toUpperCase() + kind.slice(1)} specifications</h1>
+      {kind === "laptops" && (
+        <>
+          <p className="lede">
+            Hardware specifications for current listing models and lab flagships. No prices and no
+            copied reviews — silicon, display, battery, and chassis only.
+          </p>
+          <div className="filters">
+            <select value={brand} onChange={(e) => setBrand(e.target.value)}>
+              <option value="all">Any brand</option>
+              {brands.map((b) => (
+                <option key={b}>{b}</option>
+              ))}
+            </select>
+            <select value={String(minRam)} onChange={(e) => setMinRam(Number(e.target.value))}>
+              <option value="0">Any RAM</option>
+              <option value="16">16 GB+</option>
+              <option value="32">32 GB+</option>
+            </select>
+            <select value={gpuClass} onChange={(e) => setGpuClass(e.target.value)}>
+              <option value="all">Any GPU / NPU</option>
+              <option value="rtx">GeForce RTX</option>
+              <option value="npu">40+ TOPS NPU</option>
+              <option value="oled">OLED / AMOLED</option>
+            </select>
+          </div>
+        </>
+      )}
       <div className="grid cards">
         {items.map((p) => (
           <Link className="card" key={p.id} to={`/${kind}/${p.id}`}>
@@ -177,6 +224,11 @@ export function SimpleCatalog({
             </div>
             <div className="meta">{p.brand}</div>
             <h3>{p.name}</h3>
+            {kind === "laptops" && "cpu" in p ? (
+              <div>
+                {p.cpu} · {p.ramGb} GB · {p.gpu}
+              </div>
+            ) : null}
           </Link>
         ))}
       </div>

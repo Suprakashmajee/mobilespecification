@@ -62,7 +62,7 @@ export function HomePage() {
         <div>
           <h2>Laptops & watches</h2>
           <div className="grid cards">
-            {laptops.slice(0, 3).map((p) => (
+            {laptops.slice(0, 6).map((p) => (
               <Link className="card" key={p.id} to={`/laptops/${p.id}`}>
                 <div className="device-art">
                   <div className="laptop-shape" />

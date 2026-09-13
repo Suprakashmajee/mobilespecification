@@ -51,6 +51,15 @@ export interface LaptopSpec {
   enduranceHours: number;
   weightKg: number;
   thicknessMm: number;
+  sku?: string;
+  os?: string;
+  ramType?: string;
+  storageLabel?: string;
+  refreshHz?: number;
+  resolution?: string;
+  cores?: number;
+  chargeWatts?: number;
+  graphicsMemoryGb?: number;
   highlights: string[];
 }
 
