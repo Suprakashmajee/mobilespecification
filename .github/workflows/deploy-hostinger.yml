@@ -1,0 +1,41 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+      - cursor/mobilespecific-adsense-site-6c39
+  workflow_dispatch:
+
+jobs:
+  build-and-ftp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mobilespecific-dist
+          path: dist
+      - name: Upload public_html over FTP
+        if: ${{ secrets.HOSTINGER_FTP_USER != '' && secrets.HOSTINGER_FTP_PASSWORD != '' }}
+        env:
+          HOSTINGER_FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+          HOSTINGER_FTP_USER: ${{ secrets.HOSTINGER_FTP_USER }}
+          HOSTINGER_FTP_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          HOSTINGER_FTP_PORT: ${{ secrets.HOSTINGER_FTP_PORT }}
+          HOSTINGER_FTP_DIR: ${{ secrets.HOSTINGER_FTP_DIR }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+          if [ -z "$HOSTINGER_FTP_HOST" ]; then export HOSTINGER_FTP_HOST=ftp.mobilespecific.com; fi
+          bash scripts/deploy-hostinger.sh
+      - name: FTP secrets missing
+        if: ${{ secrets.HOSTINGER_FTP_USER == '' || secrets.HOSTINGER_FTP_PASSWORD == '' }}
+        run: |
+          echo "::warning::Add Actions secrets HOSTINGER_FTP_USER and HOSTINGER_FTP_PASSWORD from hPanel FTP Accounts, then re-run this workflow. Gmail is not the FTP username."

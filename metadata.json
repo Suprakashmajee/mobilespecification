@@ -1,0 +1,5 @@
+{
+  "name": "mobilespecific",
+  "description": "Specification-only hardware lab for phones, laptops, watches, and tablets with Google AdSense inventory spaces.",
+  "requestFramePermissions": []
+}
