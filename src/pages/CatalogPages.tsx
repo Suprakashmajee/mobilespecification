@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { AdSenseUnit } from "../components/AdSenseUnit";
+import { DevicePhoto } from "../components/DevicePhoto";
 import { phones } from "../data/phones";
 import { laptops } from "../data/laptops";
 import { watches } from "../data/watches";
@@ -54,9 +55,7 @@ export function PhoneCatalog() {
         {list.flatMap((p, i) => {
           const card = (
             <Link className="card" key={p.id} to={`/phones/${p.id}`}>
-              <div className="device-art">
-                <div className="phone-shape" />
-              </div>
+              <DevicePhoto kind="phone" name={p.name} extra={p.brand} />
               <div className="meta">
                 {p.siliconVendor} · {p.ramGb} GB RAM · {p.storageGb} GB
               </div>
@@ -106,6 +105,7 @@ export function PhoneDetails() {
     <div className="wrap section layout-2">
       <div className="grid">
         <div className="card">
+          <DevicePhoto kind="phone" name={p.name} extra={p.brand} hero />
           <div className="kicker">{p.brand}</div>
           <h1>{p.name}</h1>
           <p>
@@ -219,9 +219,11 @@ export function SimpleCatalog({
       <div className="grid cards">
         {items.map((p) => (
           <Link className="card" key={p.id} to={`/${kind}/${p.id}`}>
-            <div className="device-art">
-              <div className={kind === "laptops" ? "laptop-shape" : kind === "watches" ? "watch-shape" : "phone-shape"} />
-            </div>
+            <DevicePhoto
+              kind={kind === "laptops" ? "laptop" : kind === "watches" ? "watch" : "tablet"}
+              name={p.name}
+              extra={"gpu" in p ? String(p.gpu) : p.brand}
+            />
             <div className="meta">{p.brand}</div>
             <h3>{p.name}</h3>
             {kind === "laptops" && "cpu" in p ? (
@@ -249,6 +251,7 @@ export function GenericDetails({ kind }: { kind: "laptops" | "watches" | "tablet
   return (
     <div className="wrap section layout-2">
       <div className="card">
+        <DevicePhoto kind={kind === "laptops" ? "laptop" : kind === "watches" ? "watch" : "tablet"} name={item.name} extra={"gpu" in item ? String(item.gpu) : item.brand} hero />
         <h1>{item.name}</h1>
         <div className="table-wrap" style={{ marginTop: 12 }}>
           <table>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AdSenseUnit } from "../components/AdSenseUnit";
+import { DevicePhoto } from "../components/DevicePhoto";
 import { phones } from "../data/phones";
 import { laptops } from "../data/laptops";
 import { watches } from "../data/watches";
@@ -41,9 +42,7 @@ export function HomePage() {
         <div className="grid cards">
           {phones.slice(0, 6).map((p) => (
             <Link className="card" key={p.id} to={`/phones/${p.id}`}>
-              <div className="device-art">
-                <div className="phone-shape" />
-              </div>
+              <DevicePhoto kind="phone" name={p.name} extra={p.brand} />
               <div className="meta">
                 {p.brand} · {p.year}
               </div>
@@ -64,9 +63,7 @@ export function HomePage() {
           <div className="grid cards">
             {laptops.slice(0, 6).map((p) => (
               <Link className="card" key={p.id} to={`/laptops/${p.id}`}>
-                <div className="device-art">
-                  <div className="laptop-shape" />
-                </div>
+                <DevicePhoto kind="laptop" name={p.name} extra={p.gpu} />
                 <div className="meta">{p.cpu}</div>
                 <h3>{p.name}</h3>
                 <div>
@@ -76,9 +73,7 @@ export function HomePage() {
             ))}
             {watches.slice(0, 3).map((p) => (
               <Link className="card" key={p.id} to={`/watches/${p.id}`}>
-                <div className="device-art">
-                  <div className="watch-shape" />
-                </div>
+                <DevicePhoto kind="watch" name={p.name} extra={p.brand} />
                 <div className="meta">{p.water}</div>
                 <h3>{p.name}</h3>
                 <div>
