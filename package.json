@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview --host --port 4173"
+    "preview": "vite preview --host --port 4173",
+    "deploy": "npm run build && bash scripts/deploy-hostinger.sh"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -34,13 +34,28 @@ Demo account: `owner@mobilespecific.com` / `lab-owner`
 
 ## Build & Hostinger
 
+GitHub does not update [mobilespecific.com](https://mobilespecific.com). Hostinger serves whatever is in `public_html`.
+
+### Automatic deploy (GitHub Actions)
+
+1. In hPanel → Websites → mobilespecific.com → Files → **FTP Accounts**, copy host, username, and password. The username is **not** your Gmail address.
+2. In the GitHub repo: Settings → Secrets and variables → Actions, add:
+   - `HOSTINGER_FTP_USER`
+   - `HOSTINGER_FTP_PASSWORD`
+   - optional `HOSTINGER_FTP_HOST` (default `ftp.mobilespecific.com`)
+   - optional `HOSTINGER_FTP_DIR` (default `/public_html/`)
+3. Push to `main` (or use **Actions → Deploy to Hostinger → Run workflow**).
+
+### Manual deploy
+
 ```bash
 npm run build
+export HOSTINGER_FTP_USER='from-hpanel'
+export HOSTINGER_FTP_PASSWORD='from-hpanel'
+npm run deploy
 ```
 
-Upload the **entire** `dist/` folder into Hostinger `public_html` (replace old `index.html` and the `assets/` files). GitHub updates do not change mobilespecific.com until that upload happens. Then purge hCDN cache if the old teal site still appears.
-
-Confirm the new build: footer should read `Build 2026.09.13-amber`, and `/version.json` should return `"palette":"amber-copper"`.
+After a successful upload, https://mobilespecific.com/version.json should show `"build":"2026.09.13-live"`. Purge hCDN in hPanel if the old teal bundle remains.
 
 Import `public/mobilespecific_hostinger_db.sql`. Copy `hostinger/api` to `public_html/api` and edit `config.php` on the server only.
 
