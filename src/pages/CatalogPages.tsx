@@ -55,7 +55,7 @@ export function PhoneCatalog() {
         {list.flatMap((p, i) => {
           const card = (
             <Link className="card" key={p.id} to={`/phones/${p.id}`}>
-              <DevicePhoto kind="phone" name={p.name} extra={p.brand} />
+              <DevicePhoto kind="phone" name={p.name} extra={p.brand} id={p.id} />
               <div className="meta">
                 {p.siliconVendor} · {p.ramGb} GB RAM · {p.storageGb} GB
               </div>
@@ -105,7 +105,7 @@ export function PhoneDetails() {
     <div className="wrap section layout-2">
       <div className="grid">
         <div className="card">
-          <DevicePhoto kind="phone" name={p.name} extra={p.brand} hero />
+          <DevicePhoto kind="phone" name={p.name} extra={p.brand} id={p.id} hero />
           <div className="kicker">{p.brand}</div>
           <h1>{p.name}</h1>
           <p>
@@ -223,6 +223,7 @@ export function SimpleCatalog({
               kind={kind === "laptops" ? "laptop" : kind === "watches" ? "watch" : "tablet"}
               name={p.name}
               extra={"gpu" in p ? String(p.gpu) : p.brand}
+              id={p.id}
             />
             <div className="meta">{p.brand}</div>
             <h3>{p.name}</h3>
@@ -251,7 +252,13 @@ export function GenericDetails({ kind }: { kind: "laptops" | "watches" | "tablet
   return (
     <div className="wrap section layout-2">
       <div className="card">
-        <DevicePhoto kind={kind === "laptops" ? "laptop" : kind === "watches" ? "watch" : "tablet"} name={item.name} extra={"gpu" in item ? String(item.gpu) : item.brand} hero />
+        <DevicePhoto
+          kind={kind === "laptops" ? "laptop" : kind === "watches" ? "watch" : "tablet"}
+          name={item.name}
+          extra={"gpu" in item ? String(item.gpu) : item.brand}
+          id={item.id}
+          hero
+        />
         <h1>{item.name}</h1>
         <div className="table-wrap" style={{ marginTop: 12 }}>
           <table>

@@ -42,7 +42,7 @@ export function HomePage() {
         <div className="grid cards">
           {phones.slice(0, 6).map((p) => (
             <Link className="card" key={p.id} to={`/phones/${p.id}`}>
-              <DevicePhoto kind="phone" name={p.name} extra={p.brand} />
+              <DevicePhoto kind="phone" name={p.name} extra={p.brand} id={p.id} />
               <div className="meta">
                 {p.brand} · {p.year}
               </div>
@@ -63,7 +63,7 @@ export function HomePage() {
           <div className="grid cards">
             {laptops.slice(0, 6).map((p) => (
               <Link className="card" key={p.id} to={`/laptops/${p.id}`}>
-                <DevicePhoto kind="laptop" name={p.name} extra={p.gpu} />
+                <DevicePhoto kind="laptop" name={p.name} extra={p.gpu} id={p.id} />
                 <div className="meta">{p.cpu}</div>
                 <h3>{p.name}</h3>
                 <div>
@@ -73,7 +73,7 @@ export function HomePage() {
             ))}
             {watches.slice(0, 3).map((p) => (
               <Link className="card" key={p.id} to={`/watches/${p.id}`}>
-                <DevicePhoto kind="watch" name={p.name} extra={p.brand} />
+                <DevicePhoto kind="watch" name={p.name} extra={p.brand} id={p.id} />
                 <div className="meta">{p.water}</div>
                 <h3>{p.name}</h3>
                 <div>
